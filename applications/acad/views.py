@@ -19,12 +19,20 @@ def homepage(request):
     return render(request,'home.html')
 
 def add_course(request):
-    if request.method =='POST':
-        course_name = request.POST['course_name']
-        course_detail = request.POST['course_detail']
-
-        courses = Course.objects.create(course_name=course_name,course_details=course_detail)
-    return render(request,'add_course.html')
+    course_name = request.POST.get('course_name')
+    course_detail = request.POST.get('course_detail')
+    print(course_name,course_detail)
+    courses = Course.objects.create(course_name=course_name,course_details=course_detail)
+    obj = Course.objects.all()
+    try:
+        data = render_to_string('view_course.html',{'course_list':obj},
+                                 request)
+        print("abcd")
+        obj = json.dumps({'d' : data})
+        # print("gscdgascdbscabdfcasbfcdnabcfb")
+        return HttpResponse(obj, content_type = 'application/json')
+    except:
+        return HttpResponse("fghjk")
 
 def get_course_list(request):
     obj = Course.objects.all().filter()
@@ -32,6 +40,8 @@ def get_course_list(request):
     context ={'course_list':obj}
     return context
 
+# def get_courses(request):
+#     return render(request,'acad/view_course.html',get_course_list(request))
 # Select Programme to add curriculum
 
 def programme(request):
@@ -503,7 +513,7 @@ def add_curriculum(request):
                 pbi=pbi,
                 pr=pr)
             obj.save()
-            return JsonResponse({"success": True, "msg": "Curriculum  creadted."})
+            return JsonResponse({"success": True, "msg": "Curriculum  created."})
         except:
             return HttpResponseRedirect('/acad')
 
@@ -515,6 +525,12 @@ def get_batch_curriculum(request):
         obj = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
     else:
         obj = None
+
+    # Changes
+    # sem_list = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
+    # sem1 = sem_list.sem1
+
+
 
     if obj :
         data = render_to_string('acad/add_semester_response.html',
@@ -602,10 +618,99 @@ def get_batch_semesters(request):
         obj = None
 
     if obj :
+        #
+
+        total_credits = obj.total_credits
+        pcc=obj.professional_core_credit
+        pec=obj.professional_elective_credit
+        ppc = obj.professional_project_credit
+        plc = obj.professional_lab_credit
+        cesc = obj.Core_engineering_science_credit
+        cnsc = obj.Core_natural_science_credit
+        chc = obj.Core_humanities_credit
+        cdc = obj.Core_design_credit
+        cmc = obj.Core_manufacturing_credit
+        cmsc= obj.Core_management_science_credit
+        pbi = obj.pbi
+        pr = obj.pr
+
+        rc = CurriculumCourse.objects.filter(course_type='Core')
+        trc=0
+        for i in rc:
+            trc = trc + int(i.course_credits)
+        trc = pcc-trc
+
+        re = CurriculumCourse.objects.filter(course_type='Elective')
+        tre=0
+        for i in re:
+            tre = tre + int(i.course_credits)
+        tre = pec-tre
+
+        rl = CurriculumCourse.objects.filter(course_type='Lab')
+        trl=0
+        for i in rl:
+            trl = trl + int(i.course_credits)
+        trl = plc-trl
+
+        rp = CurriculumCourse.objects.filter(course_type='Project')
+        trp=0
+        for i in rp:
+            trp = trp + int(i.course_credits)
+        trp = ppc-trp
+
+        res = CurriculumCourse.objects.filter(course_type='ES')
+        tres=0
+        for i in res:
+            tres = tres + int(i.course_credits)
+        tres = cesc-tres
+
+        rns = CurriculumCourse.objects.filter(course_type='NS')
+        trns=0
+        for i in rns:
+            trns = trns + int(i.course_credits)
+        trns = cnsc-trns
+
+        rhs = CurriculumCourse.objects.filter(course_type='HS')
+        trhs=0
+        for i in rhs:
+            trhs = trhs + int(i.course_credits)
+        trhs = chc-trhs
+
+        rds = CurriculumCourse.objects.filter(course_type='DS')
+        trds=0
+        for i in rds:
+            trds = trds + int(i.course_credits)
+        trds = cdc-trds
+
+        rmn = CurriculumCourse.objects.filter(course_type='MN')
+        trmn=0
+        for i in rmn:
+            trmn = trmn + int(i.course_credits)
+        trmn = cmc-trmn
+
+        rms = CurriculumCourse.objects.filter(course_type='MS')
+        trms=0
+        for i in rms:
+            trms = trms + int(i.course_credits)
+        trms = cmsc-trms
+
+        tt = trc+tre+trl+tres+trns+trhs+trds+trmn+trms
+
+        #
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
         course_list = Course.objects.all();
         data = render_to_string('acad/add_curr_course_response.html',
-                                {'sem1' : obj.sem1,
+                                {'total_rem':tt,
+                                'trc':trc,
+                                'tre':tre,
+                                'trl':trl,
+                                'tres':tres,
+                                'trns':trns,
+                                'trhs':trhs,
+                                'trds':trds,
+                                'trmn':trmn,
+                                'trms':trms,
+                                'sem1' : obj.sem1,
                                 'sem2' : obj.sem2,
                                 'sem3' : obj.sem3,
                                 'sem4' : obj.sem4,

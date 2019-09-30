@@ -55,7 +55,7 @@
 
                 <h3 class="ui dividing header" style="width: 50%;font-weight: bolder;font-stretch: semi-expanded;background-color:#F2F3F4 ;">Professional</h3>
   				<div class="three fields">
-  					
+
                     <div class="field">
                         <label for="professional_core_courses">Core</label>
                         <div class="ui input focus">
@@ -126,7 +126,7 @@
                 </div><br>
 
 
-                
+
                 <div class="ui divider"></div>
                 <div class="ui primary button" id="add_sem_res_submit">Set Semester</div>
             </div>
@@ -193,39 +193,46 @@ $(document).ready(function(){
 
         var pbi = document.getElementById("add_sem_res_pbi").value;
         alert(pbi);
-        
-			$.ajax({
-				type:"POST",
-		        url: "/acad/set_batch_semester/",
-		        data:{
-	            programme:programme,
-	            batch : batch,
-	            semester:sem,
-	            total_number_of_courses:totalcourses,
-	            professional_core_courses:profcore,
-	            professional_elective_courses:profelective,
-	            professional_project_courses:profproject,
-	            professional_lab_courses: proflab,
-	            escourses: es,
-	            hscourses :hs,
-	            dscourses:ds,
-	            mncourses :mn,
-	            nscourses :ns,
-	            mscourses:ms,
-	            pbi : pbi,
-		        csrfmiddlewaretoken: '{{ csrf_token }}'
-		        },
-          	success: function( data )
-		        {
-		        	if(data.done){
-		        	$('#add_sem_res_icon'+sem).removeClass('exclamation');
-		        	$('#add_sem_res_icon'+sem).addClass('green');
-                    $('#add_sem_res_icon'+sem).addClass('checkmark');
+
+				if(profcore+profelective+profproject+proflab+es+ns+hs+ds+mn+ms == totalcourses){
+					$.ajax({
+						type:"POST",
+				        url: "/acad/set_batch_semester/",
+				        data:{
+			            programme:programme,
+			            batch : batch,
+			            semester:sem,
+			            total_number_of_courses:totalcourses,
+			            professional_core_courses:profcore,
+			            professional_elective_courses:profelective,
+			            professional_project_courses:profproject,
+			            professional_lab_courses: proflab,
+			            escourses: es,
+			            hscourses :hs,
+			            dscourses:ds,
+			            mncourses :mn,
+			            nscourses :ns,
+			            mscourses:ms,
+			            pbi : pbi,
+				        csrfmiddlewaretoken: '{{ csrf_token }}'
+				        },
+		          	success: function( data )
+				        {
+				        	if(data.done){
+				        	$('#add_sem_res_icon'+sem).removeClass('exclamation');
+				        	$('#add_sem_res_icon'+sem).addClass('green');
+		                    $('#add_sem_res_icon'+sem).addClass('checkmark');
+							}
+				        	alert(data.msg);
+				        	$('#add_sem_res_modal').modal('hide');
+				        }
+					});
+				}
+
+					else{
+						alert("Total Courses doesn't match with the entered courses !!");
 					}
-		        	alert(data.msg);
-		        	$('#add_sem_res_modal').modal('hide');
-		        }
-			});
-		
+
+
   		});
 });

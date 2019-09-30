@@ -37,6 +37,19 @@ class Constants:
         ('MS', 'Management Science'),
     )
 
+    MTechSpecialization = (
+        ('Power and Control', 'Power and Control'),
+        ('Microwave and Communication Engineering', 'Microwave and Communication Engineering'),
+        ('Micro-nano Electronics', 'Micro-nano Electronics'),
+        ('CAD/CAM', 'CAD/CAM'),
+        ('Design', 'Design'),
+        ('Manufacturing', 'Manufacturing'),
+        ('CSE', 'CSE'),
+        ('Mechatronics', 'Mechatronics'),
+        ('MDes', 'MDes'),
+        ('all', 'all')
+    )
+
 
 # class Student(models.Model):
 #
@@ -83,6 +96,7 @@ class BatchSemester(models.Model):
 class BtechCurriculum(models.Model):
     programme = models.CharField(max_length=30,choices=Constants.PROGRAMME)
     batch = models.IntegerField(default=int(timezone.now().year))
+    total_credits= models.IntegerField(default=0,null=True,blank=True)
     #Professional Courses
     professional_core_credit = models.IntegerField(default=0)
     professional_elective_credit = models.IntegerField(default=0)
@@ -114,6 +128,8 @@ class BtechCurriculum(models.Model):
         unique_together = ('programme','batch')
 
 class CurriculumCourse(models.Model):
+    # Add branch
+    branch = models.CharField(max_length=25,choices=Constants.BRANCH,null=True,blank=True)
     semester = models.ForeignKey(BatchSemester,on_delete=models.CASCADE,null=True,blank=True)
     course_id = models.CharField(max_length=20,blank=True,null=True)
     curr_course = models.ForeignKey(Course,on_delete=models.CASCADE,null=True)
@@ -138,6 +154,43 @@ class CurriculumInstructor(models.Model):
     class Meta():
         unique_together = ('course','instructor')
 
+
+
+# Mtech Curriculum
+
+class MtechSemester(models.Model):
+    batch = models.IntegerField(default=int(timezone.now().year))
+    programme = models.CharField(max_length=30,choices=Constants.PROGRAMME,default="")
+    semester = models.IntegerField(default=0)
+    total_courses =models.IntegerField(default=0)
+    elective_courses = models.IntegerField(default=0)
+    core_courses = models.IntegerField(default=0)
+    thesis = models.IntegerField(default=0)
+    seminar = models.IntegerField(default=0)
+    lab_courses = models.IntegerField(default=0)
+
+class MtechCurriculum(models.Model):
+    batch = models.IntegerField(default=int(timezone.now().year))
+    programme = models.CharField(max_length=30,choices=Constants.PROGRAMME,default="")
+    total_number_of_courses = models.IntegerField(default=0)
+
+    # Not Sure
+    branch = models.CharField(max_length=25,choices=Constants.BRANCH,null=True,blank=True)
+    specialization = models.CharField(max_length=50,choices=Constants.MTechSpecialization,null=True,blank=True)
+
+    #credits
+    total_credits = models.IntegerField(default=0)
+    elective_credits = models.IntegerField(default=0)
+    lab_credits = models.IntegerField(default=0)
+    thesis_credits = models.IntegerField(default=0)
+    seminar_credits = models.IntegerField(default=0)
+    core_credits = models.IntegerField(default=0)
+
+    #Semester
+    sem1 = models.ForeignKey(MtechSemester,on_delete=models.CASCADE,related_name="mtech_semester_1",null=True,blank=True)
+    sem2 = models.ForeignKey(MtechSemester,on_delete=models.CASCADE,related_name="mtech_semester_2",null=True,blank=True)
+    sem3 = models.ForeignKey(MtechSemester,on_delete=models.CASCADE,related_name="mtech_semester_3",null=True,blank=True)
+    sem4 = models.ForeignKey(MtechSemester,on_delete=models.CASCADE,related_name="mtech_semester_4",null=True,blank=True)
 
 
 

@@ -634,67 +634,65 @@ def get_batch_semesters(request):
         pbi = obj.pbi
         pr = obj.pr
 
-        rc = CurriculumCourse.objects.filter(course_type='Core')
+        sem_batch = BatchSemester.objects.all().filter(batch=batch).filter(programme=programme)
+
         trc=0
-        for i in rc:
-            trc = trc + int(i.course_credits)
-        trc = pcc-trc
-
-        re = CurriculumCourse.objects.filter(course_type='Elective')
         tre=0
-        for i in re:
-            tre = tre + int(i.course_credits)
-        tre = pec-tre
-
-        rl = CurriculumCourse.objects.filter(course_type='Lab')
         trl=0
-        for i in rl:
-            trl = trl + int(i.course_credits)
-        trl = plc-trl
-
-        rp = CurriculumCourse.objects.filter(course_type='Project')
         trp=0
-        for i in rp:
-            trp = trp + int(i.course_credits)
-        trp = ppc-trp
-
-        res = CurriculumCourse.objects.filter(course_type='ES')
         tres=0
-        for i in res:
-            tres = tres + int(i.course_credits)
-        tres = cesc-tres
-
-        rns = CurriculumCourse.objects.filter(course_type='NS')
         trns=0
-        for i in rns:
-            trns = trns + int(i.course_credits)
-        trns = cnsc-trns
-
-        rhs = CurriculumCourse.objects.filter(course_type='HS')
         trhs=0
-        for i in rhs:
-            trhs = trhs + int(i.course_credits)
-        trhs = chc-trhs
-
-        rds = CurriculumCourse.objects.filter(course_type='DS')
         trds=0
-        for i in rds:
-            trds = trds + int(i.course_credits)
-        trds = cdc-trds
-
-        rmn = CurriculumCourse.objects.filter(course_type='MN')
         trmn=0
-        for i in rmn:
-            trmn = trmn + int(i.course_credits)
-        trmn = cmc-trmn
-
-        rms = CurriculumCourse.objects.filter(course_type='MS')
         trms=0
-        for i in rms:
-            trms = trms + int(i.course_credits)
-        trms = cmsc-trms
 
+        for sem in sem_batch:
+            rc = CurriculumCourse.objects.filter(course_type='Core').filter(semester=sem)
+            for i in rc:
+                trc = trc + int(i.course_credits)
+            re = CurriculumCourse.objects.filter(course_type='Elective').filter(semester=sem)
+            for i in re:
+                tre = tre + int(i.course_credits)
+            rl = CurriculumCourse.objects.filter(course_type='Lab').filter(semester=sem)
+            for i in rl:
+                trl = trl + int(i.course_credits)
+            rp = CurriculumCourse.objects.filter(course_type='Project').filter(semester=sem)
+            for i in rp:
+                trp = trp + int(i.course_credits)
+            res = CurriculumCourse.objects.filter(course_type='ES').filter(semester=sem)
+            for i in res:
+                tres = tres + int(i.course_credits)
+            rns = CurriculumCourse.objects.filter(course_type='NS').filter(semester=sem)
+            for i in rns:
+                trns = trns + int(i.course_credits)
+            rhs = CurriculumCourse.objects.filter(course_type='HS').filter(semester=sem)
+            for i in rhs:
+                trhs = trhs + int(i.course_credits)
+            rds = CurriculumCourse.objects.filter(course_type='DS').filter(semester=sem)
+            for i in rds:
+                trds = trds + int(i.course_credits)
+            rmn = CurriculumCourse.objects.filter(course_type='MN').filter(semester=sem)
+            for i in rmn:
+                trmn = trmn + int(i.course_credits)
+            rms = CurriculumCourse.objects.filter(course_type='MS').filter(semester=sem)
+            for i in rms:
+                trms = trms + int(i.course_credits)
+
+
+        trc = pcc-trc
+        tre = pec-tre
+        trl = plc-trl
+        trp = ppc-trp
+        tres = cesc-tres
+        trns = cnsc-trns
+        trhs = chc-trhs
+        trds = cdc-trds
+        trmn = cmc-trmn
+        trms = cmsc-trms
         tt = trc+tre+trl+tres+trns+trhs+trds+trmn+trms
+
+
 
         #
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]

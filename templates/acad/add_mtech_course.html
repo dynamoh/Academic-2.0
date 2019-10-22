@@ -1,0 +1,58 @@
+<div class="ui stackable doubling grid" style="width: 100%;">
+	<div class="ui column" style="width: 50%;">
+		<div class="ui vertical large steps" style="width: 100%;">
+
+			{% for obj in sem_list %}
+			<div class=" step" data="{{forloop.counter}}">
+				{% if obj %}
+				<i class="ui green checkmark icon"></i>
+				{% else %}
+				<i class="ui exclamation icon"></i>
+				{%endif%}
+				<div class="content">
+					<div class="title">Sem{{forloop.counter}}</div>
+					<div class="description">{{programme}}, {{batch}}</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="ui column" style="width: 50%;">
+		<p class="sem_info" id="add_curr_course_res_home" style="font-weight: bold;">Here information about the semster can be found.</p>
+
+
+		{% for obj in sem_list %}
+		<div class="sem_info"  id="add_curr_course_res_{{forloop.counter}}" hidden="true">
+			{% if obj %}
+			<div>
+				<h5><span><b>Semster : </b> {{obj.semester}} </span></h5>
+				<h5><span><b>No. of courses : </b> {{obj.total_number_of_courses}} </span></h5>
+				{% if obj.pbi %}
+				<h5><span><b>PBI : </b> Allowed </span></h5>
+				{% else %}
+				<h5><span><b>PBI : </b>Not Allowed </span></h5>
+				{% endif %}<br>
+				<h5><span><b>Professional Core : </b> {{obj.professional_core_courses}} </span></h5>
+				<h5><span><b>Professional Elective : </b> {{obj.professional_elective_courses}} </span></h5>
+				<h5><span><b>Professional Project : </b> {{obj.professional_project_courses}} </span></h5>
+				<h5><span><b>Professional Lab : </b> {{obj.professional_lab_courses}} </span></h5><br>
+
+				<h5><span><b>Core Engineering Science (ES) : </b> {{obj.Core_engineering_science_courses}} </span></h5>
+				<h5><span><b>Core Natural Science (NS) : </b> {{obj.Core_natural_science_courses}} </span></h5>
+				<h5><span><b>Core Humanities (HS) : </b> {{obj.Core_humanities_courses}} </span></h5>
+				<h5><span><b>Core Design (DS) : </b> {{obj.Core_design_courses}} </span></h5>
+				<h5><span><b>Core Manufacturing (MN) : </b> {{obj.Core_manufacturing_courses}} </span></h5>
+				<h5><span><b>Core Management Science (MS) : </b> {{obj.Core_management_science_courses}} </span></h5>
+			</div>
+			{% else %}
+				Information about this semester has not been decided.
+			{%endif%}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+<br>
+    <div style="text-align: center;">
+        <button class="ui primary button" id="add_curr_course_res_set_course">Set Courses</button>
+    </div>

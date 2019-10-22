@@ -873,6 +873,7 @@ def get_batch_semesters(request):
 
 
 def get_mtech_semesters(request):
+    print("Entered")
     programme = request.POST.get('programme')
     batch = int(request.POST.get('batch'))
     if programme == "MTECH" :
@@ -881,8 +882,6 @@ def get_mtech_semesters(request):
         obj = None
 
     if obj :
-        #
-
         total_credits = obj.total_credits
         elective_credits=obj.elective_credits
         lab_credits=obj.lab_credits
@@ -893,51 +892,46 @@ def get_mtech_semesters(request):
         specialization = obj.specialization
 
 
-        sem_batch = MtechSemester.objects.all().filter(batch=batch).filter(programme=programme)
-
-        trc=0
-        tre=0
-        trl=0
-        trp=0
-        tres=0
-
-        for sem in sem_batch:
-            rc = CurriculumCourse.objects.filter(course_type='Thesis').filter(semester=sem)
-            for i in rc:
-                trc = trc + int(i.course_credits)
-            re = CurriculumCourse.objects.filter(course_type='Seminar').filter(semester=sem)
-            for i in re:
-                tre = tre + int(i.course_credits)
-            rl = CurriculumCourse.objects.filter(course_type='Lab').filter(semester=sem)
-            for i in rl:
-                trl = trl + int(i.course_credits)
-            rp = CurriculumCourse.objects.filter(course_type='Elective').filter(semester=sem)
-            for i in rp:
-                trp = trp + int(i.course_credits)
-            res = CurriculumCourse.objects.filter(course_type='Core').filter(semester=sem)
-            for i in res:
-                tres = tres + int(i.course_credits)
-
-
-        trc = thesis_credits-trc
-        tre = seminar_credits-tre
-        trl = lab_credits-trl
-        trp = elective_credits-trp
-        tres = core_credits-tres
-        tt = trc+tre+trl+tres+trp
+        # sem_batch = MtechSemester.objects.filter(batch=int(batch)).filter(programme=programme)
+        #
+        # trc=0
+        # tre=0
+        # trl=0
+        # trp=0
+        # tres=0
+        #
+        # for sem in sem_batch:
+        #     rc = CurriculumCourse.objects.filter(course_type='Thesis').filter(semester=sem)
+        #     for i in rc:
+        #         trc = trc + int(i.course_credits)
+        #     re = CurriculumCourse.objects.filter(course_type='Seminar').filter(semester=sem)
+        #     for i in re:
+        #         tre = tre + int(i.course_credits)
+        #     rl = CurriculumCourse.objects.filter(course_type='Lab').filter(semester=sem)
+        #     for i in rl:
+        #         trl = trl + int(i.course_credits)
+        #     rp = CurriculumCourse.objects.filter(course_type='Elective').filter(semester=sem)
+        #     for i in rp:
+        #         trp = trp + int(i.course_credits)
+        #     res = CurriculumCourse.objects.filter(course_type='Core').filter(semester=sem)
+        #     for i in res:
+        #         tres = tres + int(i.course_credits)
+        #
+        #
+        # trc = thesis_credits-trc
+        # tre = seminar_credits-tre
+        # trl = lab_credits-trl
+        # trp = elective_credits-trp
+        # tres = core_credits-tres
+        # tt = trc+tre+trl+tres+trp
 
 
         #
-        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
+        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
         course_list = Course.objects.all();
         print(course_list)
         data = render_to_string('acad/add_mtech_course.html',
-                                {'total_rem':tt,
-                                'trc':trc,
-                                'tre':tre,
-                                'trl':trl,
-                                'tres':tres,
-                                'trp':trp,
+                                {
                                 'sem1' : obj.sem1,
                                 'sem2' : obj.sem2,
                                 'sem3' : obj.sem3,

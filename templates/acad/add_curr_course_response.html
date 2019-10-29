@@ -1,46 +1,64 @@
 {% load static %}
+<details class="credits_remaining ui segments">
+    <summary class="title">
+        <!-- <i class="dropdown icon"></i> -->
+        Credits Remaining :  {{total_rem}}
+    </summary>
+    <!-- <div class="ui bulleted list active content"> -->
+    <div class="ui segment"><h4>Professional Core : {{trc}}</h4></div>
+	<div class="ui segment"><h4>Professional Elective : {{tre}}</h4></div>
+    <div class="ui segment"><h4>Professional Lab : {{trl}}</h4></div>
+	<div class="ui segment"><h4>Engineering Science : {{tres}}</h4></div>
+    <div class="ui segment"><h4>Natural Science : {{trns}}</h4></div>
+	<div class="ui segment"><h4>Humanities : {{trhs}}</h4></div>
+    <div class="ui segment"><h4>Design : {{trds}}</h4></div>
+    <div class="ui segment"><h4>Manufacturing : {{trmn}}</h4></div>
+    <div class="ui segment"><h4>Management Science : {{trms}}</h4></div>
+    <!-- </div> -->
+</details>
+<br/>
 
-<br>
+<!-- <div class="ui stackable doubling grid" style="width: 100%;"> -->
+	<!-- <div class="ui column" style="width: 50%;"> -->
 
-<div class="credits_remaining">
-
-	<h1>Credits Remaining :  {{total_rem}}</h1>
-	<ol>
-		<li><h4>Professional Core : {{trc}}</h4></li>
-		<li><h4>Professional Elective : {{tre}}</h4></li>
-		<li><h4>Professional Lab : {{trl}}</h4></li>
-		<li><h4>Engineering Science : {{tres}}</h4></li>
-		<li><h4>Natural Science : {{trns}}</h4></li>
-		<li><h4>Humanities : {{trhs}}</h4></li>
-		<li><h4>Design : {{trds}}</h4></li>
-		<li><h4>Manufacturing : {{trmn}}</h4></li>
-		<li><h4>Management Science : {{trms}}</h4></li>
-	</ol>
-
-</div>
-<br>
-
-<div class="ui stackable doubling grid" style="width: 100%;">
-	<div class="ui column" style="width: 50%;">
-		<div class="ui vertical large steps" style="width: 100%;">
-
-			{% for obj in sem_list %}
-			<div class=" step" data="{{forloop.counter}}">
-				{% if obj %}
-				<i class="ui green checkmark icon"></i>
-				{% else %}
-				<i class="ui exclamation icon"></i>
-				{%endif%}
-				<div class="content">
-					<div class="title">Sem{{forloop.counter}}</div>
-					<div class="description">{{programme}}, {{batch}}</div>
-				</div>
-			</div>
+        <!-- Information till 4th semester -->
+		<div class="ui four steps" style="width: 100%;">
+			{% for obj in sem_list|slice:":4" %}
+    			<div class=" step" data="{{forloop.counter}}">
+    				{% if obj %}
+    				    <i class="ui green checkmark icon"></i>
+    				{% else %}
+    				    <i class="ui exclamation icon"></i>
+    				{%endif%}
+    				<div class="content">
+    					<div class="title">Sem{{forloop.counter}}</div>
+    					<div class="description">{{programme}}, {{batch}}</div>
+    				</div>
+    			</div>
 			{% endfor %}
 		</div>
-	</div>
 
-	<div class="ui column" style="width: 50%;">
+        <!-- Information from 5th sem to 8th semester -->
+        <div class="ui four steps" style="width: 100%;">
+            {% for obj in sem_list %}
+                {% if forloop.counter > 4 %}
+                    <div class="step" data="{{forloop.counter}}">
+                        {% if obj %}
+                            <i class="ui green checkmark icon"></i>
+                        {% else %}
+                            <i class="ui exclamation icon"></i>
+                        {%endif%}
+                        <div class="content">
+                            <div class="title">Sem{{forloop.counter}}</h4></div>
+                            <div class="description">{{programme}}, {{batch}}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+	<!-- </div> -->
+
+	<!-- <div class="ui column" style="width: 50%;"> -->
 		<p class="sem_info" id="add_curr_course_res_home" style="font-weight: bold;">Here information about the semster can be found.</p>
 
 
@@ -48,7 +66,7 @@
 		<div class="sem_info"  id="add_curr_course_res_{{forloop.counter}}" hidden="true">
 			{% if obj %}
 			<div>
-				<h5><span><b>Semster : </b> {{obj.semester}} </span></h5>
+				<h5><span><b>Semester : </b> {{obj.semester}} </span></h5>
 				<h5><span><b>No. of courses : </b> {{obj.total_number_of_courses}} </span></h5>
 				{% if obj.pbi %}
 				<h5><span><b>PBI : </b> Allowed </span></h5>
@@ -72,8 +90,8 @@
 			{%endif%}
 		</div>
 		{% endfor %}
-	</div>
-</div>
+	<!-- </div> -->
+<!-- </div> -->
 <br>
     <div style="text-align: center;">
         <button class="ui primary button" id="add_curr_course_res_set_course">Set Courses</button>
@@ -89,8 +107,7 @@
         <div class="column">
         {% for o in sem_list %}
         {% if o %}
-        <form class="ui large add_curr_course_res form" id="add_curr_course_res_form{{forloop.counter}}" action="/acad/add_curr_course/" hidden="true">
-					{% csrf_token %}
+        <form class="ui large add_curr_course_res form" id="add_curr_course_res_form{{forloop.counter}}" hidden="true">
             <div class="ui  segment">
 
 
@@ -759,43 +776,6 @@
       	$('#add_curr_course_res_warning'+i).show();
       	$('.add_curr_course_res_data').text("Semester "+i+", "+$('#add_curr_course_res_hidden').text());
       });
-			$("#add_curr_course_res_set1").click(function(event) {
-				alert("Clicked Successfully");
-
-	        event.preventDefault();
-	        var friendForm = $(this);
-
-	        var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
-	        posting.done(function(data) {
-	            alert('Courses Added Successfully');
-	            // window.location = "/academic-procedures/main/";
-	        });
-	        posting.fail(function(data) {
-	            alert('Failed to add Courses');
-	            // window.location = "/academic-procedures/main/";
-	        });
-	    });
     });
 
   </script>
-
-
-	<script type="text/javascript">
-	$(function() {
-	    $("#add_thesis_form").submit(function(event) {
-
-	        event.preventDefault();
-	        var friendForm = $(this);
-
-	        var posting = $.post( friendForm.attr('action'),friendForm.serialize());
-	        posting.done(function(data) {
-	            alert('Thesis Topic Successfully Submitted');
-	            window.location = "/academic-procedures/main/";
-	        });
-	        posting.fail(function(data) {
-	            alert('Failed to add');
-	            window.location = "/academic-procedures/main/";
-	        });
-	    });
-	});
-	</script>

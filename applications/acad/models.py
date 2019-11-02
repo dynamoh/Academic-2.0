@@ -69,7 +69,7 @@ class Course(models.Model):
     course_details = models.TextField(max_length=2500)
 
     def __str__(self):
-        return self.course_name
+        return self.course_name    
 
 class BatchSemester(models.Model):
     batch = models.IntegerField(default=int(timezone.now().year))

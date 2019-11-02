@@ -928,7 +928,7 @@ def get_mtech_semesters(request):
 
 
         #
-        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
+        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
         course_list = Course.objects.all();
         print(course_list)
         data = render_to_string('acad/add_mtech_course.html',

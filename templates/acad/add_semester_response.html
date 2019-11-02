@@ -117,6 +117,7 @@
 
 
 
+
 <div class="ui modal test" id="add_sem_res_modal">
     <i class="close icon"></i>
     <div class="ui middle aligned center aligned grid">
@@ -287,26 +288,20 @@ $(document).ready(function(){
 
 	if ($('#add_sem_res_hidden').attr('pro') == "BTECH"){
 			$('#add_sem_res_submit').click(function (event) {
-
 					var batch = parseInt($('#add_sem_res_hidden').attr('batch'));
-
 						var totalcourses = parseInt(document.getElementById("totalCourses").value);
-
 						var profcore = parseInt(document.getElementById("profcore").value);
 						var profelective = parseInt(document.getElementById("profelective").value);
 						var profproject = parseInt(document.getElementById("profproject").value);
 						var proflab = parseInt(document.getElementById("proflab").value);
-
 						var es = parseInt(document.getElementById("es").value);
 						var ns = parseInt(document.getElementById("ns").value);
 						var hs = parseInt(document.getElementById("hs").value);
 						var ds = parseInt(document.getElementById("ds").value);
 						var mn = parseInt(document.getElementById("mn").value);
 						var ms = parseInt(document.getElementById("ms").value);
-
 						var pbi = document.getElementById("add_sem_res_pbi").value;
 						alert(pbi);
-
 						if(profcore+profelective+profproject+proflab+es+ns+hs+ds+mn+ms == totalcourses){
 							$.ajax({
 								type:"POST",
@@ -341,7 +336,6 @@ $(document).ready(function(){
 										}
 							});
 						}
-
 							else{
 								alert("Total Courses doesn't match with the entered courses !!");
 							}

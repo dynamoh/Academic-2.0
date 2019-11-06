@@ -106,6 +106,7 @@
                 </div><br>
 
                 {% for i in 1|rjust:o.professional_core_courses %}
+								{% if o.professional_core_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -164,9 +165,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.professional_elective_courses %}
+								{% if o.professional_elective_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -225,9 +228,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.professional_project_courses%}
+								{% if o.professional_project_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -286,9 +291,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.professional_lab_courses%}
+								{% if o.professional_lab_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -347,9 +354,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_engineering_science_courses%}
+								{% if o.Core_engineering_science_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -408,9 +417,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_natural_science_courses%}
+								{% if o.Core_natural_science_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -469,9 +480,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_humanities_courses%}
+								{% if o.Core_humanities_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -530,9 +543,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_design_courses%}
+								{% if o.Core_design_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -591,9 +606,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_manufacturing_courses%}
+								{% if o.Core_manufacturing_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -652,9 +669,11 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
                 {% for i in 1|rjust:o.Core_management_science_courses%}
+								{% if o.Core_management_science_courses %}
                 	<div class="eight fields">
                 		<div class="field">
                 			<div >
@@ -713,6 +732,7 @@
                 			</div>
                 		</div>
                 	</div>
+								{% endif %}
                 {% endfor %}
 
 

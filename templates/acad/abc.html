@@ -1,52 +1,33 @@
 
-{% load static %}
+<form  id="add_curr_course_res_form" method ="POST" action="/acad/add_curr_course/" >{% csrf_token %}
 
+    {% for i in 1|rjust:sem %}
 
-<div class="ui stackable doubling grid">
-
-
-    <div class="column"></div>
-
-
-    <div class="three wide column">
-
-
-        <div class="ui divider"></div>
-
-        <div class="ui huge fluid vertical pointing menu"
-             style="max-width: 320px;">
-
-           <a class="active item" data-tab="register">
-                    <B>Verify Registered Courses</B>
-                    <i class="right floated chevron right icon"></i>
-                </a>
-                <a class="item" data-tab="result">Results
-                    <i class="right floated chevron right icon"></i>
-                </a>
-        </div>
-
-    </div>
-
-    <div class="eight wide column">
-
-        <div class="ui active tab segment" data-tab="register" >
-            {%  include 'add_btech_curriculum.html' %}
-        </div>
-
-        <div class="ui tab segment" data-tab="result">
-            {%  include 'add_batch_semester.html' %}
-        </div>
-    </div>
-
-</div>
+      <input type="text" name="cname" placeholder="Course">
+      <input type="text" name="batch" placeholder="Batch">
 
 
 
-  <script type="text/javascript">
+    {% endfor %}
+      <button class="ui primary button" id="add_curr_course_res_set">Set</button>
+  </form>
 
-        $('.item').click(function(){
-       $('.active').removeClass('active');
-       $(this).addClass('active');
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#add_curr_course_res_form").submit(function(event) {
+
+          event.preventDefault();
+          alert("Clicked Successfully");
+          var friendForm = $(this);
+          var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
+          posting.done(function(data) {
+              alert('Courses Added Successfully');
+              // window.location = "/academic-procedures/main/";
+          });
+          posting.fail(function(data) {
+              alert('Failed to add Courses');
+              // window.location = "/academic-procedures/main/";
+          });
       });
-
-  </script>
+</script>

@@ -1,12 +1,17 @@
 
-<form  id="add_curr_course_res_form" method ="POST" action="/acad/add_curr_course/" >{% csrf_token %}
+<form  id="add_curr_course_res_form" method ="POST" action="/acad/add_curr_course_test/" >{% csrf_token %}
 
     {% for i in 1|rjust:sem %}
 
       <input type="text" name="cname" placeholder="Course">
       <input type="text" name="batch" placeholder="Batch">
 
+    {% endfor %}
 
+    {% for i in 1|rjust:4 %}
+
+      <input type="text" name="ctype" placeholder="Course">
+      <input type="text" name="sem" placeholder="Batch">
 
     {% endfor %}
       <button class="ui primary button" id="add_curr_course_res_set">Set</button>

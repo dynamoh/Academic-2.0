@@ -89,7 +89,7 @@
         <div class="column">
         {% for o in sem_list %}
         {% if o %}
-        <form class="ui large add_curr_course_res form" id="add_curr_course_res_form{{forloop.counter}}" action="/acad/add_curr_course/" hidden="true">
+        <form class="ui large add_curr_course_res form" id="add_curr_course_res_form{{forloop.counter}}" method="POST" action="/acad/add_curr_course/" >
 					{% csrf_token %}
             <div class="ui  segment">
 
@@ -100,7 +100,8 @@
                 <div style="font-weight: bold; text-align: left;"><h4>Add Course to Curriculum :</h4></div>
                 <div class="ui divider"></div>
 
-
+								<input type="number" name="semester" value="{{forloop.counter}}" hidden=True>
+								<input type="number" name="batch" value="{{batch}}" hidden=True>
                 <div style="text-align: left;">
                 	<span><b>Total No. of courses : </b>{{o.total_number_of_courses}}</span>
                 </div><br>
@@ -115,7 +116,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="pccbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -128,11 +129,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="pcccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="pcccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -141,27 +142,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="pcccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="pcccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="pcccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="pcccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="pcccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -178,7 +179,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="pecbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -191,11 +192,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="peccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="peccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -204,27 +205,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="peccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="peccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="peccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="peccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="peccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -241,7 +242,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="ppcbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -254,11 +255,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="ppccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="ppccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -267,27 +268,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="ppccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="ppccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="ppccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="ppccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="ppccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -304,7 +305,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="plcbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -317,11 +318,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="plccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="plccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -330,27 +331,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="plccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="plccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="plccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="plccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="plccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -367,7 +368,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="cescbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -380,11 +381,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="cesccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="cesccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -393,27 +394,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="cesccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="L">
+                				<input type="number" name="cesccourse_lecture" placeholder="L">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="T">
+                				<input type="number" name="cesccourse_tutorial" placeholder="T">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="P">
+                				<input type="number" name="cesccourse_practical" placeholder="P">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="D">
+                				<input type="number" name="cesccourse_discussion" placeholder="D">
                 			</div>
                 		</div>
                 	</div>
@@ -430,7 +431,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="cnscbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -443,11 +444,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="cnsccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="cnsccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -456,27 +457,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="cnsccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="cnsccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="cnsccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="cnsccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="cnsccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -493,7 +494,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="chcbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -506,11 +507,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="chccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="chccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -519,27 +520,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="chccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="chccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="chccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="chccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="chccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -556,7 +557,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="cdcbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -569,11 +570,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="cdccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="cdccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -582,27 +583,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="cdccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="cdccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="cdccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="cdccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="cdccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -619,7 +620,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="cmcbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -632,11 +633,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="cmccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="cmccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -645,27 +646,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="cmccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="cmccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="cmccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="cmccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="cmccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -682,7 +683,7 @@
                 		</div>
 										<div class="three wide field">
                 			<div class="ui input focus">
-												<select name="branch" class="ui dropdown">
+												<select name="cmscbranch" class="ui dropdown">
 													<option value="">Branch</option>
 													<option value="CSE">Computer Science and Engineering</option>
 													<option value="ECE">Electronics and Communication Engineering</option>
@@ -695,11 +696,11 @@
                 		</div>
                 		<div class="three wide field">
                 			<div class="ui input focus">
-                				<input type="text" name="course_id" placeholder="Course ID">
+                				<input type="text" name="cmsccourse_id" placeholder="Course ID">
                 			</div>
                 		</div>
                 		<div class="four wide field">
-                			<select name="course" class="ui dropdown">
+                			<select name="cmsccourse" class="ui dropdown">
                 				<option value="">Course Name</option>
                 				{% for p in course_list %}
                 				<option value="{{p.course_name}}">{{p.course_name}}</option>
@@ -708,27 +709,27 @@
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_credits" placeholder="4">
+                				<input type="number" name="cmsccourse_credits" placeholder="4">
                 			</div>
                 		</div>
                 		<div class=" two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_lecture" placeholder="0">
+                				<input type="number" name="cmsccourse_lecture" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_tutorial" placeholder="0">
+                				<input type="number" name="cmsccourse_tutorial" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_practical" placeholder="0">
+                				<input type="number" name="cmsccourse_practical" placeholder="0">
                 			</div>
                 		</div>
                 		<div class="two wide field">
                 			<div class="ui input focus">
-                				<input type="number" name="course_discussion" placeholder="0">
+                				<input type="number" name="cmsccourse_discussion" placeholder="0">
                 			</div>
                 		</div>
                 	</div>
@@ -739,7 +740,7 @@
 
 
                 <div class="ui divider"></div>
-                <div class="ui primary button" id="add_curr_course_res_set{{forloop.counter}}">Set</div>
+                <button class="ui primary button" type="submit" id="add_curr_course_res_set{{forloop.counter}}">Set</button>
             </div>
         </form>
         {% else %}
@@ -769,7 +770,9 @@
   		$(this).addClass('active');
   		$('.sem_info').hide();
   		$('#add_curr_course_res_'+i).show();
+			// alert("add_curr_course_res_set"+i);
       });
+
       $('#add_curr_course_res_set_course').on('click',function(e){
       	e.preventDefault();
       	$('.add_curr_course_res').hide();
@@ -778,44 +781,30 @@
 
       	$('#add_curr_course_res_warning'+i).show();
       	$('.add_curr_course_res_data').text("Semester "+i+", "+$('#add_curr_course_res_hidden').text());
+				// alert("add_curr_course_res_set"+i);
       });
-			$("#add_curr_course_res_set1").click(function(event) {
-				alert("Clicked Successfully");
 
-	        event.preventDefault();
-	        var friendForm = $(this);
+			$('#add_curr_course_res_set'+i).submit(function(e){
+	          e.preventDefault();
+	          alert("Clicked Successfully");
+	          var friendForm = $(this);
+	          var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
+	          posting.done(function(data) {
+	              alert('Courses Added Successfully');
+	              window.location = "/academic-procedures/main/";
+	          });
+	          posting.fail(function(data) {
+	              alert('Failed to add Courses');
+	              window.location = "/academic-procedures/main/";
+	          });
+	      });
 
-	        var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
-	        posting.done(function(data) {
-	            alert('Courses Added Successfully');
-	            // window.location = "/academic-procedures/main/";
-	        });
-	        posting.fail(function(data) {
-	            alert('Failed to add Courses');
-	            // window.location = "/academic-procedures/main/";
-	        });
-	    });
     });
 
   </script>
 
 
 	<script type="text/javascript">
-	$(function() {
-	    $("#add_thesis_form").submit(function(event) {
+		$(document).ready(function(){
 
-	        event.preventDefault();
-	        var friendForm = $(this);
-
-	        var posting = $.post( friendForm.attr('action'),friendForm.serialize());
-	        posting.done(function(data) {
-	            alert('Thesis Topic Successfully Submitted');
-	            window.location = "/academic-procedures/main/";
-	        });
-	        posting.fail(function(data) {
-	            alert('Failed to add');
-	            window.location = "/academic-procedures/main/";
-	        });
-	    });
-	});
 	</script>

@@ -597,6 +597,7 @@ def add_mtech_curriculum(request):
 def get_batch_curriculum(request):
     programme = request.POST.get('programme')
     batch = int(request.POST.get('batch'))
+    print(request.POST)
     if programme == "BTECH" :
         obj = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
     else:
@@ -662,13 +663,13 @@ def set_batch_semester(request):
     mn_courses = request.POST.get('mncourses')
     ms_courses = request.POST.get('mscourses')
     pbi = request.POST.get('pbi')
-
+    print(request.POST)
     try:
-        batch_sem = BatchSemester(
+        print("SAved")
+        batch_sem = BatchSemester.objects.create(
             programme=programme,
             batch=batch,
             semester=sem,
-            total_number_of_courses=total_courses,
             professional_core_courses=prof_core_courses,
             professional_elective_courses=prof_elective_courses,
             professional_project_courses=prof_project_courses,
@@ -681,6 +682,7 @@ def set_batch_semester(request):
             Core_management_science_courses=ms_courses,
             pbi=pbi)
         batch_sem.save()
+        print("SAved")
         obj_curr = BtechCurriculum.objects.filter(batch=batch, programme = programme).first()
         if sem == 1 :
             obj_curr.sem1=batch_sem
@@ -949,127 +951,474 @@ def get_mtech_semesters(request):
         return JsonResponse({"success": True, "msg": "There is no curriculum for given batch and programme.",'done' : False })
 
 
-# def send_list(request):
-#     programme = "BTECH"
-#     batch = 2016
-#     if programme == "BTECH" :
-#         obj = BtechCurriculum.objects.filter(batch = batch, programme = programme).first()
-#     else:
-#         obj = None
-#
-#     if obj :
-#         #
-#
-#         total_credits = obj.total_credits
-#         pcc=obj.professional_core_credit
-#         pec=obj.professional_elective_credit
-#         ppc = obj.professional_project_credit
-#         plc = obj.professional_lab_credit
-#         cesc = obj.Core_engineering_science_credit
-#         cnsc = obj.Core_natural_science_credit
-#         chc = obj.Core_humanities_credit
-#         cdc = obj.Core_design_credit
-#         cmc = obj.Core_manufacturing_credit
-#         cmsc= obj.Core_management_science_credit
-#         pbi = obj.pbi
-#         pr = obj.pr
-#
-#         sem_batch = BatchSemester.objects.all().filter(batch=batch).filter(programme=programme)
-#
-#         trc=0
-#         tre=0
-#         trl=0
-#         trp=0
-#         tres=0
-#         trns=0
-#         trhs=0
-#         trds=0
-#         trmn=0
-#         trms=0
-#
-#         for sem in sem_batch:
-#             rc = CurriculumCourse.objects.filter(course_type='Core').filter(semester=sem)
-#             for i in rc:
-#                 trc = trc + int(i.course_credits)
-#             re = CurriculumCourse.objects.filter(course_type='Elective').filter(semester=sem)
-#             for i in re:
-#                 tre = tre + int(i.course_credits)
-#             rl = CurriculumCourse.objects.filter(course_type='Lab').filter(semester=sem)
-#             for i in rl:
-#                 trl = trl + int(i.course_credits)
-#             rp = CurriculumCourse.objects.filter(course_type='Project').filter(semester=sem)
-#             for i in rp:
-#                 trp = trp + int(i.course_credits)
-#             res = CurriculumCourse.objects.filter(course_type='ES').filter(semester=sem)
-#             for i in res:
-#                 tres = tres + int(i.course_credits)
-#             rns = CurriculumCourse.objects.filter(course_type='NS').filter(semester=sem)
-#             for i in rns:
-#                 trns = trns + int(i.course_credits)
-#             rhs = CurriculumCourse.objects.filter(course_type='HS').filter(semester=sem)
-#             for i in rhs:
-#                 trhs = trhs + int(i.course_credits)
-#             rds = CurriculumCourse.objects.filter(course_type='DS').filter(semester=sem)
-#             for i in rds:
-#                 trds = trds + int(i.course_credits)
-#             rmn = CurriculumCourse.objects.filter(course_type='MN').filter(semester=sem)
-#             for i in rmn:
-#                 trmn = trmn + int(i.course_credits)
-#             rms = CurriculumCourse.objects.filter(course_type='MS').filter(semester=sem)
-#             for i in rms:
-#                 trms = trms + int(i.course_credits)
-#
-#
-#         trc = pcc-trc
-#         tre = pec-tre
-#         trl = plc-trl
-#         trp = ppc-trp
-#         tres = cesc-tres
-#         trns = cnsc-trns
-#         trhs = chc-trhs
-#         trds = cdc-trds
-#         trmn = cmc-trmn
-#         trms = cmsc-trms
-#         tt = trc+tre+trl+tres+trns+trhs+trds+trmn+trms
-#
-#
-#         #
-#         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
-#         course_list = Course.objects.all();
-#         print(course_list)
-#         data =             {'total_rem':tt,
-#                                 'trc':trc,
-#                                 'tre':tre,
-#                                 'trl':trl,
-#                                 'tres':tres,
-#                                 'trns':trns,
-#                                 'trhs':trhs,
-#                                 'trds':trds,
-#                                 'trmn':trmn,
-#                                 'trms':trms,
-#                                 'sem1' : obj.sem1,
-#                                 'sem2' : obj.sem2,
-#                                 'sem3' : obj.sem3,
-#                                 'sem4' : obj.sem4,
-#                                 'sem5' : obj.sem5,
-#                                 'sem6' : obj.sem6,
-#                                 'sem7' : obj.sem7,
-#                                 'sem8' : obj.sem8,
-#                                 'obj' : obj,
-#                                 'sem_list' : sem_list,
-#                                 'course_list' : course_list,
-#                                 'programme' : programme,
-#                                 'batch' : batch,
-#                                 'sem' :8
-#                                 }
-#         return render(request,'acad/abc.html',data)
-#
-#
 def add_curr_course(request):
-    print("One")
-    values_length = len(request.POST.getlist('cname'))
+    values_length1 = len(request.POST.getlist('pccbranch'))
+    values_length2 = len(request.POST.getlist('pecbranch'))
+    values_length3 = len(request.POST.getlist('ppcbranch'))
+    values_length4 = len(request.POST.getlist('plcbranch'))
+    values_length5 = len(request.POST.getlist('cescbranch'))
+    values_length6 = len(request.POST.getlist('cnscbranch'))
+    values_length7 = len(request.POST.getlist('chcbranch'))
+    values_length8 = len(request.POST.getlist('cdcbranch'))
+    values_length9 = len(request.POST.getlist('cmcbranch'))
+    values_length10 = len(request.POST.getlist('cmscbranch'))
+    seme =1
+    batch =2018
 
-    for x in range(values_length):
+    for x in range(1):
+                for key, values in request.POST.lists():
+                    if(key == 'semester'):
+                        seme = values[x]
+                    elif(key == 'batch'):
+                        batch = values[x]
+
+    a= list()
+    b= list()
+    c= list()
+    d= list()
+    e= list()
+    f= list()
+    g= list()
+    h= list()
+
+    sem = BatchSemester.objects.all().filter(batch=batch,programme="BTECH",semester=seme).first()
+
+    for x in range(values_length1):
+                for key, values in request.POST.lists():
+                    if (key == 'pccbranch'):
+                        a.append(values[x])
+                    elif (key == 'pcccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'pcccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'pcccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'pcccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'pcccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'pcccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'pcccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="Core",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length2):
+                for key, values in request.POST.lists():
+                    if (key == 'pecbranch'):
+                        a.append(values[x])
+                    elif (key == 'peccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'peccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'pcccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'peccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'peccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'peccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'peccourse_discussion'):
+                        h.append(values[x])
+
+    for y in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[y],course_type="Elective",semester=sem,curr_course=c[y],course_id=b[y],course_credits=d[y],course_lecture=e[y],course_tutorial=f[y],course_practical=g[y],course_discussion=h[y])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length3):
+                for key, values in request.POST.lists():
+                    if (key == 'ppcbranch'):
+                        a.append(values[x])
+                    elif (key == 'ppccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'ppccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'ppccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'ppccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'ppccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'ppccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'ppccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="Project",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length4):
+                for key, values in request.POST.lists():
+                    if (key == 'plcbranch'):
+                        a.append(values[x])
+                    elif (key == 'plccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'plccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'plccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'plccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'plccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'plccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'plccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="Lab",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length5):
+                for key, values in request.POST.lists():
+                    if (key == 'cescbranch'):
+                        a.append(values[x])
+                    elif (key == 'cesccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'cesccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'cesccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'cesccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'cesccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'cesccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'cesccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="ES",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length6):
+                for key, values in request.POST.lists():
+                    if (key == 'cnscbranch'):
+                        a.append(values[x])
+                    elif (key == 'cnsccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'cnsccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'cnsccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'cnsccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'cnsccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'cnsccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'cnsccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="NS",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length7):
+                for key, values in request.POST.lists():
+                    if (key == 'chcbranch'):
+                        a.append(values[x])
+                    elif (key == 'chccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'chccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'chccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'chccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'chccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'chccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'chccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="HS",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length8):
+                for key, values in request.POST.lists():
+                    if (key == 'cdcbranch'):
+                        a.append(values[x])
+                    elif (key == 'cdccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'cdccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'cdccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'cdccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'cdccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'cdccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'cdccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="DS",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length9):
+                for key, values in request.POST.lists():
+                    if (key == 'cmcbranch'):
+                        a.append(values[x])
+                    elif (key == 'cmccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'cmccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'cmccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'cmccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'cmccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'cmccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'cmccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="MN",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    for x in range(values_length10):
+                for key, values in request.POST.lists():
+                    if (key == 'cmscbranch'):
+                        a.append(values[x])
+                    elif (key == 'cmsccourse_id'):
+                        b.append(values[x])
+                    elif (key == 'cmsccourse'):
+                        c.append(Course.objects.all().filter(course_name=values[x]).first())
+                    elif (key == 'cmsccourse_credits'):
+                        d.append(values[x])
+                    elif (key == 'cmsccourse_lecture'):
+                        e.append(values[x])
+                    elif (key == 'cmsccourse_tutorial'):
+                        f.append(values[x])
+                    elif (key == 'cmsccourse_practical'):
+                        g.append(values[x])
+                    elif (key == 'cmsccourse_discussion'):
+                        h.append(values[x])
+
+    for x in range(a.__len__()):
+        CurriculumCourse.objects.create(branch=a[x],course_type="MS",semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+    a.clear()
+    b.clear()
+    c.clear()
+    d.clear()
+    e.clear()
+    f.clear()
+    g.clear()
+    h.clear()
+
+    return render(request,'acad/add_curr_course_response.html')
+
+
+
+def send_list(request):
+    programme = "BTECH"
+    batch = 2016
+    if programme == "BTECH" :
+        obj = BtechCurriculum.objects.filter(batch = batch, programme = programme).first()
+    else:
+        obj = None
+
+    if obj :
+        #
+
+        total_credits = obj.total_credits
+        pcc=obj.professional_core_credit
+        pec=obj.professional_elective_credit
+        ppc = obj.professional_project_credit
+        plc = obj.professional_lab_credit
+        cesc = obj.Core_engineering_science_credit
+        cnsc = obj.Core_natural_science_credit
+        chc = obj.Core_humanities_credit
+        cdc = obj.Core_design_credit
+        cmc = obj.Core_manufacturing_credit
+        cmsc= obj.Core_management_science_credit
+        pbi = obj.pbi
+        pr = obj.pr
+
+        sem_batch = BatchSemester.objects.all().filter(batch=batch).filter(programme=programme)
+
+        trc=0
+        tre=0
+        trl=0
+        trp=0
+        tres=0
+        trns=0
+        trhs=0
+        trds=0
+        trmn=0
+        trms=0
+
+        for sem in sem_batch:
+            rc = CurriculumCourse.objects.filter(course_type='Core').filter(semester=sem)
+            for i in rc:
+                trc = trc + int(i.course_credits)
+            re = CurriculumCourse.objects.filter(course_type='Elective').filter(semester=sem)
+            for i in re:
+                tre = tre + int(i.course_credits)
+            rl = CurriculumCourse.objects.filter(course_type='Lab').filter(semester=sem)
+            for i in rl:
+                trl = trl + int(i.course_credits)
+            rp = CurriculumCourse.objects.filter(course_type='Project').filter(semester=sem)
+            for i in rp:
+                trp = trp + int(i.course_credits)
+            res = CurriculumCourse.objects.filter(course_type='ES').filter(semester=sem)
+            for i in res:
+                tres = tres + int(i.course_credits)
+            rns = CurriculumCourse.objects.filter(course_type='NS').filter(semester=sem)
+            for i in rns:
+                trns = trns + int(i.course_credits)
+            rhs = CurriculumCourse.objects.filter(course_type='HS').filter(semester=sem)
+            for i in rhs:
+                trhs = trhs + int(i.course_credits)
+            rds = CurriculumCourse.objects.filter(course_type='DS').filter(semester=sem)
+            for i in rds:
+                trds = trds + int(i.course_credits)
+            rmn = CurriculumCourse.objects.filter(course_type='MN').filter(semester=sem)
+            for i in rmn:
+                trmn = trmn + int(i.course_credits)
+            rms = CurriculumCourse.objects.filter(course_type='MS').filter(semester=sem)
+            for i in rms:
+                trms = trms + int(i.course_credits)
+
+
+        trc = pcc-trc
+        tre = pec-tre
+        trl = plc-trl
+        trp = ppc-trp
+        tres = cesc-tres
+        trns = cnsc-trns
+        trhs = chc-trhs
+        trds = cdc-trds
+        trmn = cmc-trmn
+        trms = cmsc-trms
+        tt = trc+tre+trl+tres+trns+trhs+trds+trmn+trms
+
+
+        #
+        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
+        course_list = Course.objects.all();
+        print(course_list)
+        data =             {'total_rem':tt,
+                                'trc':trc,
+                                'tre':tre,
+                                'trl':trl,
+                                'tres':tres,
+                                'trns':trns,
+                                'trhs':trhs,
+                                'trds':trds,
+                                'trmn':trmn,
+                                'trms':trms,
+                                'sem1' : obj.sem1,
+                                'sem2' : obj.sem2,
+                                'sem3' : obj.sem3,
+                                'sem4' : obj.sem4,
+                                'sem5' : obj.sem5,
+                                'sem6' : obj.sem6,
+                                'sem7' : obj.sem7,
+                                'sem8' : obj.sem8,
+                                'obj' : obj,
+                                'sem_list' : sem_list,
+                                'course_list' : course_list,
+                                'programme' : programme,
+                                'batch' : batch,
+                                'sem' :8
+                                }
+        return render(request,'acad/abc.html',data)
+#
+#
+def add_curr_course_test(request):
+    print("One")
+    values_length1 = len(request.POST.getlist('cname'))
+    values_length2 = len(request.POST.getlist('ctype'))
+
+    for x in range(values_length1):
                 for key, values in request.POST.lists():
                     if (key == 'cname'):
                         print("branch")
@@ -1077,9 +1426,69 @@ def add_curr_course(request):
                     elif (key == 'batch'):
                         print(values[x])
 
+    for x in range(values_length2):
+                for key, values in request.POST.lists():
+                    if (key == 'ctype'):
+                        print("type")
+                        print(values[x])
+                    elif (key == 'sem'):
+                        print(values[x])
+
     #here i have demonstrated getting the list.
     return HttpResponse("ksjhvuw9r")
     # print(course[0])
+
+
+def view_btech_curriculum(request):
+    programme = request.POST.get('programme')
+    batch = int(request.POST.get('batch'))
+    if programme == "BTECH" :
+        obj = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
+    else:
+        obj = None
+
+    if obj :
+        #
+
+        total_credits = obj.total_credits
+        sem1=CurriculumCourse.objects.filter(semester=obj.sem1)
+        sem2=CurriculumCourse.objects.filter(semester=obj.sem2)
+        sem3=CurriculumCourse.objects.filter(semester=obj.sem3)
+        sem4=CurriculumCourse.objects.filter(semester=obj.sem4)
+        sem5=CurriculumCourse.objects.filter(semester=obj.sem5)
+        sem6=CurriculumCourse.objects.filter(semester=obj.sem6)
+        sem7=CurriculumCourse.objects.filter(semester=obj.sem7)
+        sem8=CurriculumCourse.objects.filter(semester=obj.sem8)
+
+
+
+        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
+        print(sem_list)
+        course_list = Course.objects.all();
+        print(course_list)
+        data = render_to_string('acad/view_btech_curr_response.html',
+                                {'total':total_credits,
+                                'sem1' :sem1,
+                                'sem2' :sem2,
+                                'sem3' :sem3,
+                                'sem4' :sem4,
+                                'sem5' :sem5,
+                                'sem6' :sem6,
+                                'sem7' :sem7,
+                                'sem8' :sem8,
+                                'obj' : obj,
+                                'sem_list' : sem_list,
+                                'course_list' : course_list,
+                                'programme' : programme,
+                                'batch' : batch,
+                                'sem' :8
+                                }, request)
+        obj = json.dumps({'html' : data, 'msg' : 'obj found', 'done' : True})
+        return HttpResponse(obj, content_type = 'application/json')
+    else :
+        return JsonResponse({"success": True, "msg": "There is no curriculum for given batch and programme.",'done' : False })
+
+
 
 
 

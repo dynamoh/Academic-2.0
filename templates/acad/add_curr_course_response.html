@@ -786,12 +786,13 @@
 
 			$('#add_curr_course_res_set'+i).submit(function(e){
 	          e.preventDefault();
-	          alert("Clicked Successfully");
 	          var friendForm = $(this);
 	          var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
+						alert("kgvdnk");
 	          posting.done(function(data) {
+							$('#add_curr_course_res_modal').modal('hide');
 	              alert('Courses Added Successfully');
-	              window.location = "/academic-procedures/main/";
+
 	          });
 	          posting.fail(function(data) {
 	              alert('Failed to add Courses');
@@ -802,9 +803,3 @@
     });
 
   </script>
-
-
-	<script type="text/javascript">
-		$(document).ready(function(){
-
-	</script>

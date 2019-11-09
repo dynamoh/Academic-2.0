@@ -1,8 +1,8 @@
 {% load static %}
 
-<div class="ui stackable doubling grid" style="width: 100%;">
-	<div class="ui column" style="width: 50%;">
-		<div class="ui vertical large steps" style="width: 100%;">
+<!-- <div class="ui stackable doubling grid" style="width: 100%;">
+	<div class="ui column" style="width: 50%;"> -->
+		<div class="ui small steps" style="width: 100%;">
 
 			{% for obj in sem_list %}
 			<div class=" step" data="{{forloop.counter}}">
@@ -18,31 +18,48 @@
 			</div>
 			{% endfor %}
 		</div>
-	</div>
+	<!-- </div> -->
 
-	<div class="ui column" style="width: 50%;">
+	<!-- <div class="ui column" style="width: 50%;"> -->
 		<p class="sem_info" id="add_curr_course_res_home" style="font-weight: bold;">Here information about the semster can be found.</p>
 
 
 		{% for obj in sem_list %}
 		<div class="sem_info"  id="add_curr_course_res_{{forloop.counter}}" hidden="true">
 			{% if obj %}
-			<div>
-				<h5><span><b>Semster : </b> {{obj.semester}} </span></h5>
-				<h5><span><b>No. of courses : </b> {{obj.total_courses}} </span></h5>
-				<h5><span><b>Core : </b> {{obj.core_courses}} </span></h5>
-				<h5><span><b>Elective : </b> {{obj.elective_courses}} </span></h5>
-				<h5><span><b>Thesis : </b> {{obj.thesis}} </span></h5>
-				<h5><span><b>Seminar : </b> {{obj.seminar}} </span></h5>
-				<h5><span><b>Lab Courses : </b> {{obj.lab_courses}} </span></h5>
-			</div>
+				<br>
+				<table class="ui celled structured table">
+					<thead>
+						<tr>
+                            <th colspan="3"> Semester : {{obj.semester}} </th>
+                            <th colspan="2"> No. of courses : {{obj.total_courses}} </th>
+                        </tr>
+                        <tr>
+                            <th>Core</th>
+                            <th>Elective</th>
+                            <th>Thesis</th>
+                            <th>Seminar</th>
+                            <th>Lab Courses</th>
+                        </tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{obj.core_courses}}</td>
+							<td>{{obj.elective_courses}}</td>
+							<td>{{obj.thesis}}</td>
+							<td>{{obj.seminar}}</td>
+							<td>{{obj.lab_courses}}</td>
+						</tr>
+					</tbody>
+				</table>
 			{% else %}
-				Information about this semester has not been decided.
+				<b>Information about this semester has not been decided.</b>
 			{%endif%}
 		</div>
 		{% endfor %}
-	</div>
-</div>
+
+	<!-- </div> -->
+<!-- </div> -->
 <br>
     <div style="text-align: center;">
         <button class="ui primary button" id="add_curr_course_res_set_course">Set Courses</button>

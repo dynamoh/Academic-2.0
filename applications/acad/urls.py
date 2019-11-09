@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^get_mtech_semesters/', views.get_mtech_semesters),
     url(r'^add_curr_course_test/', views.add_curr_course_test),
     url(r'^add_curr_course/', views.add_curr_course),
+    url(r'^add_mtech_curr_course/', views.add_mtech_curr_course),
     url(r'^view_btech/', views.view_btech_curriculum),
     url(r'^view_mtech/', views.view_mtech),
     url(r'^send/', views.send_list),

@@ -897,7 +897,7 @@ def get_mtech_semesters(request):
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
         course_list = Course.objects.all();
         print(course_list)
-        data = render_to_string('acad/add_mtech_course.html',
+        data = render_to_string('acad/add_mtech_course_response.html',
                                 {
                                 'sem1' : obj.sem1,
                                 'sem2' : obj.sem2,
@@ -990,6 +990,81 @@ def add_curr_course(request):
         ind+=1
 
     data = render_to_string('acad/add_curr_course_response.html',
+                                {'sem' :8
+                                }, request)
+    obj = json.dumps({'html' : data, 'msg' : 'Courses Added', 'done' : True})
+    return HttpResponse(obj, content_type = 'application/json')
+
+
+def add_mtech_curr_course(request):
+    seme =1
+    batch =2018
+
+    val_list = list()
+    val_list.append(len(request.POST.getlist('mpccbranch')))
+    val_list.append(len(request.POST.getlist('mpecbranch')))
+    val_list.append(len(request.POST.getlist('mppcbranch')))
+    val_list.append(len(request.POST.getlist('mplcbranch')))
+    val_list.append(len(request.POST.getlist('mcescbranch')))
+
+    prefix_list = ['mpcc','mpec','mppc','mplc','mcesc']
+    c_type = ['Core','Elective','Thesis','Seminar','Lab']
+
+    for x in range(1):
+                for key, values in request.POST.lists():
+                    if(key == 'msemester'):
+                        seme = values[x]
+                    elif(key == 'mbatch'):
+                        batch = values[x]
+
+    a= list()
+    b= list()
+    c= list()
+    d= list()
+    e= list()
+    f= list()
+    g= list()
+    h= list()
+
+    sem = MtechSemester.objects.all().filter(batch=batch,programme="MTECH",semester=seme).first()
+
+    ind =0
+
+    for val in val_list:
+        for x in range(val):
+                    for key, values in request.POST.lists():
+                        if (key == prefix_list[ind] + 'branch'):
+                            a.append(values[x])
+                        elif (key == prefix_list[ind] + 'course_id'):
+                            b.append(values[x])
+                        elif (key == prefix_list[ind] + 'course'):
+                            c.append(Course.objects.all().filter(course_name=values[x]).first())
+                        elif (key == prefix_list[ind] + 'course_credits'):
+                            d.append(values[x])
+                        elif (key == prefix_list[ind] + 'course_lecture'):
+                            e.append(values[x])
+                        elif (key == prefix_list[ind] + 'course_tutorial'):
+                            f.append(values[x])
+                        elif (key == prefix_list[ind] + 'course_practical'):
+                            g.append(values[x])
+                        elif (key == prefix_list[ind] + 'course_discussion'):
+                            h.append(values[x])
+
+        for x in range(a.__len__()):
+            CurriculumCourse.objects.create(branch=a[x],course_type=c_type[ind],mtech_semester=sem,curr_course=c[x],course_id=b[x],course_credits=d[x],course_lecture=e[x],course_tutorial=f[x],course_practical=g[x],course_discussion=h[x])
+
+        a.clear()
+        b.clear()
+        c.clear()
+        d.clear()
+        e.clear()
+        f.clear()
+        g.clear()
+        h.clear()
+
+        ind+=1
+
+    data = render_to_string('acad/add_mtech_course_response.html',
                                 {'sem' :8
                                 }, request)
     obj = json.dumps({'html' : data, 'msg' : 'Courses Added', 'done' : True})
@@ -1141,6 +1216,14 @@ def add_curr_course_test(request):
 def view_btech_curriculum(request):
     programme = request.POST.get('programme')
     batch = int(request.POST.get('batch'))
+    sem1=None
+    sem2=None
+    sem3=None
+    sem4=None
+    sem5=None
+    sem6=None
+    sem7=None
+    sem8=None
     if programme == "BTECH" :
         obj = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
     else:
@@ -1150,17 +1233,25 @@ def view_btech_curriculum(request):
         #
 
         total_credits = obj.total_credits
-        sem1=CurriculumCourse.objects.filter(semester=obj.sem1)
-        sem2=CurriculumCourse.objects.filter(semester=obj.sem2)
-        sem3=CurriculumCourse.objects.filter(semester=obj.sem3)
-        sem4=CurriculumCourse.objects.filter(semester=obj.sem4)
-        sem5=CurriculumCourse.objects.filter(semester=obj.sem5)
-        sem6=CurriculumCourse.objects.filter(semester=obj.sem6)
-        sem7=CurriculumCourse.objects.filter(semester=obj.sem7)
-        sem8=CurriculumCourse.objects.filter(semester=obj.sem8)
+        if obj.sem1:
+            sem1=CurriculumCourse.objects.filter(semester=obj.sem1)
+        if obj.sem2:
+            sem2=CurriculumCourse.objects.filter(semester=obj.sem2)
+        if obj.sem3:
+            sem3=CurriculumCourse.objects.filter(semester=obj.sem3)
+        if obj.sem4:
+            sem4=CurriculumCourse.objects.filter(semester=obj.sem4)
+        if obj.sem5:
+            sem5=CurriculumCourse.objects.filter(semester=obj.sem5)
+        if obj.sem6:
+            sem6=CurriculumCourse.objects.filter(semester=obj.sem6)
+        if obj.sem7:
+            sem7=CurriculumCourse.objects.filter(semester=obj.sem7)
+        if obj.sem8:
+            sem8=CurriculumCourse.objects.filter(semester=obj.sem8)
 
 
-
+        print(sem1,sem2,sem3,sem4,sem5,sem6,sem7,sem8)
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
         print(sem_list)
         course_list = Course.objects.all();
@@ -1192,22 +1283,32 @@ def view_btech_curriculum(request):
 def view_mtech(request):
     programme = request.POST.get('programme')
     batch = int(request.POST.get('batch'))
+    sem1=None
+    sem2=None
+    sem3=None
+    sem4=None
+
     if programme == "MTECH" :
-        obj = MtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
+        obj = MtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = "MTECH").first()
     else:
         obj = None
 
     if obj :
         #
-
+        print(obj)
         total_credits = obj.total_credits
-        sem1=CurriculumCourse.objects.filter(semester=obj.sem1)
-        sem2=CurriculumCourse.objects.filter(semester=obj.sem2)
-        sem3=CurriculumCourse.objects.filter(semester=obj.sem3)
-        sem4=CurriculumCourse.objects.filter(semester=obj.sem4)
+        if obj.sem1:
+            sem1=CurriculumCourse.objects.all().filter(mtech_semester=obj.sem1)
+        if obj.sem2:
+            sem2=CurriculumCourse.objects.all().filter(mtech_semester=obj.sem2)
+        if obj.sem3:
+            sem3=CurriculumCourse.objects.all().filter(mtech_semester=obj.sem3)
+        if obj.sem4:
+            sem4=CurriculumCourse.objects.all().filter(mtech_semester=obj.sem4)
 
 
 
+        print(sem1,sem2)
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
         print(sem_list)
         course_list = Course.objects.all();

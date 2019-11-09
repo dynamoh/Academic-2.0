@@ -1,79 +1,111 @@
 {% load static %}
 
 <br>
-
-<div class="credits_remaining">
-
-	<h1>Credits Remaining :  {{total_rem}}</h1>
-	<ol>
-		<li><h4>Professional Core : {{trc}}</h4></li>
-		<li><h4>Professional Elective : {{tre}}</h4></li>
-		<li><h4>Professional Lab : {{trl}}</h4></li>
-		<li><h4>Engineering Science : {{tres}}</h4></li>
-		<li><h4>Natural Science : {{trns}}</h4></li>
-		<li><h4>Humanities : {{trhs}}</h4></li>
-		<li><h4>Design : {{trds}}</h4></li>
-		<li><h4>Manufacturing : {{trmn}}</h4></li>
-		<li><h4>Management Science : {{trms}}</h4></li>
-	</ol>
-
-</div>
+<details class="credits_remaining ui segments">
+    <summary class="title ui segment">
+        <b>Credits Remaining :  {{total_rem}}</b>
+    </summary>
+    <div class="ui segment"><h4>Professional Core : {{trc}}</h4></div>
+    <div class="ui segment"><h4>Professional Elective : {{tre}}</h4></div>
+    <div class="ui segment"><h4>Professional Lab : {{trl}}</h4></div>
+    <div class="ui segment"><h4>Engineering Science(ES) : {{tres}}</h4></div>
+    <div class="ui segment"><h4>Natural Science(NS) : {{trns}}</h4></div>
+    <div class="ui segment"><h4>Humanities(HS) : {{trhs}}</h4></div>
+    <div class="ui segment"><h4>Design(DS) : {{trds}}</h4></div>
+    <div class="ui segment"><h4>Manufacturing(MN) : {{trmn}}</h4></div>
+    <div class="ui segment"><h4>Management Science(MS) : {{trms}}</h4></div>
+</details>
 <br>
 
-<div class="ui stackable doubling grid" style="width: 100%;">
-	<div class="ui column" style="width: 50%;">
-		<div class="ui vertical large steps" style="width: 100%;">
+<!-- Information till 4th semester -->
+    <div class="ui four steps" style="width: 100%;">
+        {% for obj in sem_list|slice:":4" %}
+            <div class=" step" data="{{forloop.counter}}">
+                {% if obj %}
+                    <i class="ui green checkmark icon"></i>
+                {% else %}
+                    <i class="ui exclamation icon"></i>
+                {%endif%}
+                <div class="content">
+                    <div class="title">Sem{{forloop.counter}}</div>
+                    <div class="description">{{programme}}, {{batch}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-			{% for obj in sem_list %}
-			<div class=" step" data="{{forloop.counter}}">
-				{% if obj %}
-				<i class="ui green checkmark icon"></i>
-				{% else %}
-				<i class="ui exclamation icon"></i>
-				{%endif%}
-				<div class="content">
-					<div class="title">Sem{{forloop.counter}}</div>
-					<div class="description">{{programme}}, {{batch}}</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+        <!-- Information from 5th sem to 8th semester -->
+        <div class="ui four steps" style="width: 100%;">
+            {% for obj in sem_list %}
+                {% if forloop.counter > 4 %}
+                    <div class="step" data="{{forloop.counter}}">
+                        {% if obj %}
+                            <i class="ui green checkmark icon"></i>
+                        {% else %}
+                            <i class="ui exclamation icon"></i>
+                        {%endif%}
+                        <div class="content">
+                            <div class="title"><h4>Sem{{forloop.counter}}</h4></div>
+                            <div class="description">{{programme}}, {{batch}}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    <!-- <div class="ui column" style="width: 50%;"> -->
+        <p class="sem_info" id="add_curr_course_res_home" style="font-weight: bold;">Here information about the semster can be found.</p>
 
-	<div class="ui column" style="width: 50%;">
-		<p class="sem_info" id="add_curr_course_res_home" style="font-weight: bold;">Here information about the semster can be found.</p>
 
+        {% for obj in sem_list %}
+        <div class="sem_info"  id="add_curr_course_res_{{forloop.counter}}" hidden="true">
+            {% if obj %}
+                <br>
+                <table class="ui celled structured table">
+                    <thead>
+                        <tr>
+                            <th colspan="2"> Semester : {{obj.semester}} </th>
+                            <th colspan="4"> No. of courses : {{obj.total_number_of_courses}} </th>
+                            <th colspan="4"> PBI : {% if obj.pbi %} Allowed {% else %} Not Allowed {% endif %}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="center aligned">Professional</th>
+                            <th colspan="6" class="center aligned"> Core </th>
+                        </tr>
+                        <tr>
+                            <th>Core</th>
+                            <th>Elective</th>
+                            <th>Project</th>
+                            <th>Lab</th>
 
-		{% for obj in sem_list %}
-		<div class="sem_info"  id="add_curr_course_res_{{forloop.counter}}" hidden="true">
-			{% if obj %}
-			<div>
-				<h5><span><b>Semster : </b> {{obj.semester}} </span></h5>
-				<h5><span><b>No. of courses : </b> {{obj.total_number_of_courses}} </span></h5>
-				{% if obj.pbi %}
-				<h5><span><b>PBI : </b> Allowed </span></h5>
-				{% else %}
-				<h5><span><b>PBI : </b>Not Allowed </span></h5>
-				{% endif %}<br>
-				<h5><span><b>Professional Core : </b> {{obj.professional_core_courses}} </span></h5>
-				<h5><span><b>Professional Elective : </b> {{obj.professional_elective_courses}} </span></h5>
-				<h5><span><b>Professional Project : </b> {{obj.professional_project_courses}} </span></h5>
-				<h5><span><b>Professional Lab : </b> {{obj.professional_lab_courses}} </span></h5><br>
+                            <th>ES</th>
+                            <th>NS</th>
+                            <th>HS</th>
+                            <th>DS</th>
+                            <th>MN</th>
+                            <th>MS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{obj.professional_core_courses}}</td>
+                            <td>{{obj.professional_elective_courses}}</td>
+                            <td>{{obj.professional_project_courses}}</td>
+                            <td>{{obj.professional_lab_courses}}</td>
 
-				<h5><span><b>Core Engineering Science (ES) : </b> {{obj.Core_engineering_science_courses}} </span></h5>
-				<h5><span><b>Core Natural Science (NS) : </b> {{obj.Core_natural_science_courses}} </span></h5>
-				<h5><span><b>Core Humanities (HS) : </b> {{obj.Core_humanities_courses}} </span></h5>
-				<h5><span><b>Core Design (DS) : </b> {{obj.Core_design_courses}} </span></h5>
-				<h5><span><b>Core Manufacturing (MN) : </b> {{obj.Core_manufacturing_courses}} </span></h5>
-				<h5><span><b>Core Management Science (MS) : </b> {{obj.Core_management_science_courses}} </span></h5>
-			</div>
-			{% else %}
-				Information about this semester has not been decided.
-			{%endif%}
-		</div>
-		{% endfor %}
-	</div>
-</div>
+                            <td>{{obj.Core_engineering_science_courses}}</td>
+                            <td>{{obj.Core_natural_science_courses}}</td>
+                            <td>{{obj.Core_humanities_courses}}</td>
+                            <td>{{obj.Core_design_courses}}</td>
+                            <td>{{obj.Core_manufacturing_courses}}</td>
+                            <td>{{obj.Core_management_science_courses}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            {% else %}
+                Information about this semester has not been decided.
+            {%endif%}
+        </div>
+        {% endfor %}
 <br>
     <div style="text-align: center;">
         <button class="ui primary button" id="add_curr_course_res_set_course">Set Courses</button>

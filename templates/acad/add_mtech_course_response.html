@@ -62,9 +62,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="4" >{{obj.thesis}}</td>
-                            <td colspan="4" >{{obj.seminar}}</td>
-                            <td colspan="4" >{{obj.lab}}</td>
+                            <td>{{obj.thesis}}</td>
+                            <td>{{obj.seminar}}</td>
+                            <td>{{obj.lab}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -471,10 +471,9 @@
 
 			$('#add_curr_course_mtech_set'+i).submit(function(e){
 	          e.preventDefault();
-            alert("kgvdnk");
 	          var friendForm = $(this);
 	          var posting = $.post( friendForm.attr('action'), friendForm.serialize() );
-
+						alert("kgvdnk");
 	          posting.done(function(data) {
 							$('#add_curr_course_mtech_modal').modal('hide');
 	              alert('Courses Added Successfully');

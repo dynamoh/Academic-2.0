@@ -10,6 +10,7 @@
       <li>
         <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
         <h3>Course Type : {{course.course_type}}</h3>
+        <h3 id="cnm1{{forloop.counter}}" class="cname" >{{course.course_id}}</h3>
       </li>
       <hr>
     {% endfor %}
@@ -26,6 +27,7 @@
       <li>
         <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
         <h3>Course Type : {{course.course_type}}</h3>
+        <h3 id="cnm2{{forloop.counter}}" class="cname" >{{course.course_id}}</h3>
       </li>
       <hr>
     {% endfor %}
@@ -42,6 +44,7 @@
       <li>
         <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
         <h3>Course Type : {{course.course_type}}</h3>
+        <h3 id="cnm3{{forloop.counter}}" class="cname" >{{course.course_id}}</h3>
       </li>
       <hr>
     {% endfor %}
@@ -58,6 +61,7 @@
       <li>
         <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
         <h3>Course Type : {{course.course_type}}</h3>
+        <h3 id="cnm4{{forloop.counter}}" class="cname" >{{course.course_id}}</h3>
       </li>
       <hr>
     {% endfor %}
@@ -67,12 +71,29 @@
   <br>
   {% endif %}
 
+</div>
 
-
-
-
-
-
-
+<div class="ui full screen modal test" id="edit_course_mtech_modal" >
+  <i class="close icon"></i>
 
 </div>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    var p;
+    $('.cname').on('click',function(e){
+      $('.cname').removeClass('abcd');
+      var id = $(this).attr('id');
+      p = document.getElementById(id).innerHTML;
+      alert(p);
+    // $('#add_curr_course_mtech_'+i).show();
+    // alert("add_curr_course_mtech_set"+i);
+    });
+
+
+
+  });
+
+
+</script>

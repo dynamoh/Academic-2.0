@@ -1,140 +1,300 @@
 {% load static %}
 
 <div class="">
+  <h1>Batch : {{batch}}</h1>
+  <div class="ui small steps">
+    <div class="step" data="1">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem1</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="2">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem2</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="3">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem3</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="4">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem4</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+  </div>
+  <div class="ui small steps">
+    <div class="step" data="5">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem5</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="6">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem6</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="7">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem7</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+    <div class="step" data="8">
+      <i class="info icon"></i>
+      <div class="content">
+        <div class="title">Sem8</div>
+        <div class="description">Course List</div>
+      </div>
+    </div>
+  </div>
 
-<h1>Batch : {{batch}}</h1>
-  <h2>Semester 1:</h2>
-  {% if sem1 %}
-  <ol>
-    {% for course in sem1 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem1 -->
+  <table class="ui celled structured table" id="view_curr_res_1" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem1
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem1 %}
+          {% for course in sem1 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 2:</h2>
-  {% if sem2 %}
-  <ol>
-    {% for course in sem2 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem2 -->
+  <table class="ui celled structured table" id="view_curr_res_2" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem2
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem2 %}
+          {% for course in sem2 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 3:</h2>
-  {% if sem3 %}
-  <ol>
-    {% for course in sem3 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem3 -->
+  <table class="ui celled structured table" id="view_curr_res_3" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem3
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem3 %}
+          {% for course in sem3 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 4:</h2>
-  {% if sem4 %}
-  <ol>
-    {% for course in sem4 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem4 -->
+  <table class="ui celled structured table" id="view_curr_res_4" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem4
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem4 %}
+          {% for course in sem4 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 5:</h2>
-  {% if sem5 %}
-  <ol>
-    {% for course in sem5 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem5 -->
+  <table class="ui celled structured table" id="view_curr_res_5" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem5
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem5 %}
+          {% for course in sem5 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 6:</h2>
-  {% if sem6 %}
-  <ol>
-    {% for course in sem6 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem6 -->
+  <table class="ui celled structured table" id="view_curr_res_6" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem6
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem6 %}
+          {% for course in sem6 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 7:</h2>
-  {% if sem7 %}
-  <ol>
-    {% for course in sem7 %}
-      <li>
-        <h3 class="ui blue"> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem7 -->
+  <table class="ui celled structured table" id="view_curr_res_7" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem7
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem7 %}
+          {% for course in sem7 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-  <h2>Semester 8:</h2>
-  {% if sem8 %}
-  <ol>
-    {% for course in sem8 %}
-      <li>
-        <h3> Course Name :{{course.curr_course.course_name}} ({{course.course_credits}}C , {{course.course_lecture}}L , {{course.course_tutorial}}T, {{course.course_practical}}P , {{course.course_discussion}}D)</h3>
-        <h3>Course Type : {{course.course_type}}</h3>
-      </li>
-      <hr>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <h4>No Courses added in this semester till now.</h4>
-  <br>
-  {% endif %}
+  <!-- Table to display Courses for Sem8 -->
+  <table class="ui celled structured table" id="view_curr_res_8" hidden="true">
+    <thead>
+      <tr>
+        <th>
+          Sem8
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if sem8 %}
+          {% for course in sem8 %}
+            <tr>
+              <td>
+                <b>{{course.course_type}} ({{course.course_credits}}C + {{course.course_lecture}}L + {{course.course_tutorial}}T + {{course.course_practical}}P + {{course.course_discussion}}D)</b>
+                <br>
+                <b>{{course.curr_course.course_name}}</b>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>No Courses added in this semester till now.</td>
+          </tr>
+        {% endif %}
+    </tbody>
+  </table>
 
-
-
-
-
-
-
+  <script>
+    $('.step').click(function(){
+      var i;
+      i = $(this).attr('data');
+      $('.step').removeClass('active');
+      $(this).addClass('active');
+      $('.table').hide();
+      $('#view_curr_res_'+i).show();
+    });
+  </script>
 </div>
